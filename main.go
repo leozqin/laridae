@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -19,25 +18,6 @@ import (
 
 const version = "0.0.1"
 
-// GreetingOutput represents the greeting operation response.
-type GreetingOutput struct {
-	Body struct {
-		Message string `json:"message" example:"Hello, world!" doc:"Greeting message"`
-	}
-}
-
-// GreetingInput represents the greeting operation request.
-type GreetingInput struct {
-	Name string `path:"name" maxLength:"30" example:"world" doc:"Name to greet"`
-}
-
-func Greeting(input GreetingInput) GreetingOutput {
-	output := &GreetingOutput{}
-	output.Body.Message = fmt.Sprintf("Hello, %s!", input.Name)
-
-	return *output
-}
-
 func main() {
 	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
@@ -48,12 +28,6 @@ func main() {
 	// Create a new router & API
 	router := chi.NewMux()
 	api := humachi.New(router, huma.DefaultConfig("Laridae", version))
-
-	huma.Get(api, "/greeting/{name}", func(ctx context.Context, input *GreetingInput) (*GreetingOutput, error) {
-		resp := Greeting(*input)
-
-		return &resp, nil
-	})
 
 	huma.Get(api, "/list/tools", func(ctx context.Context, input *struct{}) (*ListToolOutput, error) {
 		resp := ListTools(*db)
