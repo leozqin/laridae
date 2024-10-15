@@ -19,4 +19,8 @@ The general roadmap for Laridae is certainly open to user feedback, but is broad
 ## To Run
 Laridae is a Go application. It requires Go 1.23 or higher. Install dependencies by doing `go mod download`, then start the server by doing `go run .`
 
+Read the docs at `http://localhost:8888/docs` to familiarize yourself with how to use Laridae.
+
+Or, if you're feeling brave, pass the OpenAPI spec for Laridae straight to your agent and let them figure it out (`http://localhost:8888/openapi.json`)
+
 This is really basic, and will surely evolve over time.
